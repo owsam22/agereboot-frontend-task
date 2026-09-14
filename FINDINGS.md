@@ -39,6 +39,9 @@ Coverage is still displayed to communicate report completeness.
 For verified reports such as `m_001`, the score and biomarker results are shown,
 along with the clinician verification date.
 
+## changing of root structure
+> i have added or seperate the part 1 and part 2 task into two different folder for better structure
+
 ## Part 2
 [Will Add after completing ]
 
