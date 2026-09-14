@@ -1,4 +1,4 @@
-#Findings
+# Findings.md
 
 ## Part 1 - Existing Screen
 
