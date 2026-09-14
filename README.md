@@ -4,37 +4,27 @@ Frontend implementation for the Agereboot technical task.
 
 ## Project Structure
 
-Part 1 and Part 2 are maintained as separate Vite applications so they can be developed and evaluated independently.
+Part 1 and Part 2 are separate Vite applications so they can be run and evaluated independently.
 
 ```text
 agereboot-frontend-task/
+
 ├── part1/
-│   ├── src/
-│   │   ├── api.js
-│   │   ├── App.jsx
-│   │   ├── index.css
-│   │   └── main.jsx
-│   ├── index.html
-│   ├── package.json
-│   ├── package-lock.json
-│   └── vite.config.js
+│   └── ...
 │
 ├── part2/
 │   └── ...
 │
 ├── FINDINGS.md
 ├── README.md
-├── README-received.md
 └── .gitignore
 ```
-
-> Part 2 is currently under development.
 
 ---
 
 ## Part 1 — Existing Screen
 
-Part 1 focuses on fixing the provided member health report screen while respecting the existing backend/API contract.
+Part 1 focuses on fixing the provided health report screen while keeping the existing API contract unchanged.
 
 ### Run Part 1
 
@@ -46,25 +36,50 @@ npm run dev
 
 ### Implemented
 
-* Loading state while member data is being fetched
-* Empty state when a member has no report
-* Error state for failed API requests
-* Retry action for failed requests
-* Protection against stale data when switching members
+* Loading state
+* Empty state
+* API error and retry
+* Stale request protection
 * Clinician verification handling
-* Report coverage display
-* Separate handling of verified and unverified reports
+* Report coverage
+* Verified and unverified report handling
 
 ### Member Scenarios
 
-| Member  | Scenario                               |
-| ------- | -------------------------------------- |
-| `m_001` | Verified report                        |
-| `m_002` | Report awaiting clinician verification |
-| `m_003` | No report available                    |
-| `m_004` | API failure with retry                 |
+| Member  | Scenario                        |
+| ------- | ------------------------------- |
+| `m_001` | Verified report                 |
+| `m_002` | Awaiting clinician verification |
+| `m_003` | No report                       |
+| `m_004` | API failure                     |
 
-For unverified reports, clinical results and the health score are not presented as confirmed results.
+---
+
+## Part 2 — Redesigned Screen
+
+Part 2 is a redesign focused on making the report easier for a member to find and understand.
+
+### Run Part 2
+
+```bash
+cd part2
+npm install
+npm run dev
+```
+
+### Added
+
+* Simple home screen
+* Member search by name or ID
+* Member selection
+* Report detail view
+* Skeleton loading state
+* Responsive layout for `375px`
+* Biomarker cards
+* Back-to-home navigation
+* Clear handling of verified, pending, empty, and error states
+
+The original API contract was kept unchanged.
 
 ---
 
@@ -76,10 +91,6 @@ For unverified reports, clinical results and the health score are not presented 
 * CSS
 * Provided API/backend contract
 
-The provided API response shapes were not changed.
-
----
-
 ## Documentation
 
-Detailed findings, implementation decisions, and rationale are documented in [`FINDINGS.md`](./FINDINGS.md).
+More details about the decisions and findings are available in [`FINDINGS.md`](./FINDINGS.md).
