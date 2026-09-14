@@ -1,16 +1,85 @@
-# React + Vite
+# Agereboot Frontend Task
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Frontend implementation for the Agereboot technical task.
 
-Currently, two official plugins are available:
+## Project Structure
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+Part 1 and Part 2 are maintained as separate Vite applications so they can be developed and evaluated independently.
 
-## React Compiler
+```text
+agereboot-frontend-task/
+├── part1/
+│   ├── src/
+│   │   ├── api.js
+│   │   ├── App.jsx
+│   │   ├── index.css
+│   │   └── main.jsx
+│   ├── index.html
+│   ├── package.json
+│   ├── package-lock.json
+│   └── vite.config.js
+│
+├── part2/
+│   └── ...
+│
+├── FINDINGS.md
+├── README.md
+├── README-received.md
+└── .gitignore
+```
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+> Part 2 is currently under development.
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Part 1 — Existing Screen
+
+Part 1 focuses on fixing the provided member health report screen while respecting the existing backend/API contract.
+
+### Run Part 1
+
+```bash
+cd part1
+npm install
+npm run dev
+```
+
+### Implemented
+
+* Loading state while member data is being fetched
+* Empty state when a member has no report
+* Error state for failed API requests
+* Retry action for failed requests
+* Protection against stale data when switching members
+* Clinician verification handling
+* Report coverage display
+* Separate handling of verified and unverified reports
+
+### Member Scenarios
+
+| Member  | Scenario                               |
+| ------- | -------------------------------------- |
+| `m_001` | Verified report                        |
+| `m_002` | Report awaiting clinician verification |
+| `m_003` | No report available                    |
+| `m_004` | API failure with retry                 |
+
+For unverified reports, clinical results and the health score are not presented as confirmed results.
+
+---
+
+## Technical Approach
+
+* React
+* Vite
+* JavaScript / JSX
+* CSS
+* Provided API/backend contract
+
+The provided API response shapes were not changed.
+
+---
+
+## Documentation
+
+Detailed findings, implementation decisions, and rationale are documented in [`FINDINGS.md`](./FINDINGS.md).
