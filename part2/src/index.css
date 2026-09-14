@@ -1,135 +1,1162 @@
-/* Base styles */
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  font-family:
+    Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", sans-serif;
+
+  color: #202522;
+  background: #f7f8f6;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+}
+
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  background-color: #f4f6f8;
-  color: #333;
   margin: 0;
-  padding: 24px;
+  min-width: 320px;
+  background: #f7f8f6;
 }
 
-.app {
-  max-width: 650px;
-  margin: 0 auto;
-  background: #ffffff;
-  padding: 24px;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-}
-
-/* Header & Dropdown */
-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid #e5e7eb;
-  padding-bottom: 16px;
-  margin-bottom: 24px;
-}
-
-header h1 {
-  font-size: 1.25rem;
-  margin: 0;
-}
-
+button,
+input,
 select {
-  padding: 6px 12px;
-  border-radius: 4px;
-  border: 1px solid #ccc;
-  font-size: 0.9rem;
-}
-
-/* Common UI States */
-.state {
-  text-align: center;
-  padding: 32px 16px;
-  background-color: #f9fafb;
-  border-radius: 6px;
-  border: 1px dashed #d1d5db;
-}
-
-.state h2 {
-  font-size: 1.1rem;
-  margin-top: 0;
-}
-
-.error-state {
-  background-color: #fef2f2;
-  border-color: #fca5a5;
-  color: #991b1b;
+  font: inherit;
 }
 
 button {
-  background-color: #dc2626;
-  color: white;
-  border: none;
-  padding: 8px 16px;
-  border-radius: 4px;
   cursor: pointer;
 }
 
-button:hover {
-  background-color: #b91c1c;
+.app {
+  min-height: 100vh;
 }
 
-/* Meta & Unverified state */
-.meta {
-  color: #6b7280;
-  font-size: 0.875rem;
-  margin-top: -8px;
-  margin-bottom: 20px;
+/* --------------------------------
+   NAVBAR
+--------------------------------- */
+
+.navbar {
+  position: relative;
+  z-index: 20;
+
+  height: 72px;
+  padding: 0 32px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  background: rgba(255, 255, 255, 0.96);
+  border-bottom: 1px solid #e5e8e4;
 }
 
-.verification-state {
-  background-color: #fffbee;
-  background-color: #fffbeb;
-  border: 1px solid #fcd34d;
-  padding: 16px;
-  border-radius: 6px;
-  color: #92400e;
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+
+  padding: 0;
+  border: 0;
+  background: transparent;
+
+  color: #202522;
+  font-size: 16px;
+  font-weight: 650;
+  letter-spacing: -0.01em;
 }
 
-/* Score display */
-.score {
-  margin: 16px 0;
+.brand-mark {
+  width: 30px;
+  height: 30px;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 8px;
+  background: #285f50;
+  color: #fff;
+
+  font-size: 14px;
+  font-weight: 700;
 }
 
-.score-value {
-  font-size: 2rem;
-  font-weight: bold;
-  color: #111827;
+.search-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  height: 40px;
+  padding: 0 13px;
+
+  border: 1px solid #dfe4df;
+  border-radius: 9px;
+
+  background: #fff;
+  color: #3d4541;
+
+  font-size: 14px;
+  font-weight: 550;
+
+  transition:
+    border-color 160ms ease,
+    background 160ms ease;
 }
 
-.score-max {
-  color: #6b7280;
+.search-button:hover,
+.search-button.active {
+  border-color: #b8c6bf;
+  background: #f6f8f6;
 }
 
-/* Biomarker table */
-table {
+.navbar-search {
+  position: absolute;
+  right: 116px;
+  top: 14px;
+
+  width: 0;
+  height: 44px;
+
+  overflow: visible;
+  transition: width 180ms ease;
+}
+
+.navbar-search.is-open {
+  width: min(440px, calc(100vw - 180px));
+}
+
+.navbar-search.is-open > svg {
+  position: absolute;
+  left: 14px;
+  top: 12px;
+  z-index: 2;
+  color: #7a827e;
+}
+
+.navbar-search input {
   width: 100%;
-  border-collapse: collapse;
-  margin-top: 16px;
+  height: 44px;
+
+  padding: 0 15px 0 42px;
+
+  border: 1px solid #ccd5cf;
+  border-radius: 10px;
+
+  outline: none;
+  background: #fff;
+
+  color: #202522;
+  box-shadow: 0 4px 16px rgba(29, 42, 36, 0.07);
 }
 
-th, td {
-  padding: 10px 12px;
+.navbar-search input:focus {
+  border-color: #7d9d91;
+  box-shadow: 0 0 0 3px rgba(58, 105, 91, 0.1);
+}
+
+.navbar-search input::placeholder {
+  color: #8b928e;
+}
+
+.search-results {
+  position: absolute;
+  top: 50px;
+  left: 0;
+  width: 100%;
+
+  padding: 6px;
+
+  background: #fff;
+  border: 1px solid #dfe4df;
+  border-radius: 10px;
+
+  box-shadow: 0 12px 30px rgba(25, 38, 31, 0.11);
+}
+
+.search-result {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  gap: 11px;
+
+  padding: 10px;
+
+  border: 0;
+  border-radius: 7px;
+  background: transparent;
+
   text-align: left;
-  border-bottom: 1px solid #e5e7eb;
+  color: #202522;
 }
 
-th {
-  background-color: #f9fafb;
-  font-size: 0.85rem;
-  color: #4b5563;
-  text-transform: uppercase;
+.search-result:hover {
+  background: #f5f7f5;
 }
 
-/* Biomarker status indicator rows */
-tr.optimal { background-color: #f0fdf4; }
-tr.warning { background-color: #fffbeb; }
-tr.critical { background-color: #fef2f2; }
+.result-avatar {
+  width: 34px;
+  height: 34px;
 
-.verification-note {
-  font-size: 0.85rem;
-  color: #16a34a;
-  margin-top: 16px;
+  flex: 0 0 auto;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 50%;
+  background: #e9efeb;
+  color: #376356;
+
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.result-info {
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.result-info strong {
+  font-size: 13px;
+  font-weight: 650;
+}
+
+.result-info small {
+  color: #8a918d;
+  font-size: 11px;
+}
+
+.result-status {
+  margin-left: auto;
+  padding: 4px 7px;
+
+  border-radius: 5px;
+  background: #f0f2f0;
+  color: #737a76;
+
+  font-size: 10px;
+  font-weight: 650;
+  white-space: nowrap;
+}
+
+.result-status.verified {
+  background: #e8f1ed;
+  color: #326555;
+}
+
+.result-status.pending {
+  background: #f5efe1;
+  color: #856d3c;
+}
+
+.no-results {
+  padding: 18px 12px;
+
+  color: #777f7a;
+  font-size: 13px;
+  text-align: center;
+}
+
+/* --------------------------------
+   HOME
+--------------------------------- */
+
+.home {
+  width: min(900px, calc(100% - 40px));
+  margin: 0 auto;
+}
+
+.home-intro {
+  max-width: 650px;
+  padding: 104px 0 70px;
+}
+
+.eyebrow {
+  margin: 0 0 13px;
+
+  color: #557267;
+  font-size: 11px;
+  font-weight: 750;
+  letter-spacing: 0.11em;
+}
+
+.home-intro h1 {
+  margin: 0;
+
+  color: #202522;
+  font-size: clamp(36px, 5vw, 52px);
+  line-height: 1.08;
+  letter-spacing: -0.045em;
+  font-weight: 650;
+}
+
+.home-description {
+  max-width: 570px;
+  margin: 22px 0 28px;
+
+  color: #68716c;
+  font-size: 16px;
+  line-height: 1.65;
+}
+
+.primary-button,
+.secondary-button {
+  min-height: 44px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  padding: 0 17px;
+
+  border-radius: 8px;
+
+  font-size: 14px;
+  font-weight: 650;
+
+  transition:
+    transform 140ms ease,
+    background 140ms ease;
+}
+
+.primary-button {
+  border: 1px solid #285f50;
+  background: #285f50;
+  color: #fff;
+}
+
+.primary-button:hover {
+  background: #214f43;
+}
+
+.primary-button:active,
+.secondary-button:active {
+  transform: translateY(1px);
+}
+
+.home-guide {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+
+  border-top: 1px solid #dfe4df;
+  border-bottom: 1px solid #dfe4df;
+}
+
+.home-guide > div {
+  display: flex;
+  gap: 14px;
+
+  padding: 25px 22px 27px 0;
+}
+
+.home-guide > div + div {
+  padding-left: 22px;
+  border-left: 1px solid #dfe4df;
+}
+
+.guide-number {
+  color: #a1aaa5;
+  font-size: 11px;
+  font-weight: 700;
+  padding-top: 2px;
+}
+
+.guide-item strong,
+.home-guide strong {
+  display: block;
+  margin-bottom: 5px;
+
+  color: #2b322e;
+  font-size: 13px;
+  font-weight: 650;
+}
+
+.home-guide p {
+  margin: 0;
+
+  color: #7b837e;
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+/* --------------------------------
+   REPORT
+--------------------------------- */
+
+.report-page {
+  width: min(920px, calc(100% - 40px));
+  margin: 0 auto;
+  padding: 30px 0 70px;
+}
+
+.back-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+
+  margin-bottom: 32px;
+  padding: 0;
+
+  border: 0;
+  background: transparent;
+
+  color: #626b66;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.back-button:hover {
+  color: #285f50;
+}
+
+.report-content {
+  max-width: 840px;
+}
+
+.report-heading {
+  margin-bottom: 26px;
+}
+
+.report-heading h1 {
+  margin: 0;
+
+  font-size: 32px;
+  line-height: 1.15;
+  letter-spacing: -0.035em;
+  font-weight: 650;
+}
+
+.report-id {
+  margin: 7px 0 0;
+
+  color: #7b837e;
+  font-size: 13px;
+}
+
+.member-card {
+  min-height: 88px;
+
+  display: flex;
+  align-items: center;
+  gap: 14px;
+
+  padding: 17px 19px;
+
+  background: #fff;
+  border: 1px solid #e1e6e2;
+  border-radius: 11px;
+}
+
+.avatar {
+  width: 50px;
+  height: 50px;
+
+  flex: 0 0 auto;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 50%;
+  background: #e6efeb;
+  color: #315e51;
+
+  font-size: 14px;
+  font-weight: 750;
+}
+
+.member-details {
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.member-details strong {
+  color: #252c28;
+  font-size: 14px;
+  font-weight: 650;
+}
+
+.member-details span {
+  color: #7d8580;
+  font-size: 11px;
+}
+
+.verified-badge {
+  margin-left: auto;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+
+  padding: 6px 8px;
+
+  border: 1px solid #d3e4dc;
+  border-radius: 6px;
+
+  background: #f0f6f3;
+  color: #356657;
+
+  font-size: 11px;
+  font-weight: 650;
+}
+
+/* Score */
+
+.score-card {
+  margin-top: 14px;
+
+  min-height: 132px;
+  padding: 22px 24px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  background: #fff;
+  border: 1px solid #e1e6e2;
+  border-radius: 11px;
+}
+
+.section-label {
+  margin: 0;
+
+  color: #4c5751;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.score-helper {
+  margin: 7px 0 0;
+
+  color: #8a918d;
+  font-size: 11px;
+}
+
+.score {
+  display: flex;
+  align-items: baseline;
+  gap: 3px;
+}
+
+.score strong {
+  color: #234f43;
+  font-size: 42px;
+  line-height: 1;
+  letter-spacing: -0.05em;
+  font-weight: 650;
+}
+
+.score span {
+  color: #909792;
+  font-size: 13px;
+}
+
+/* Biomarkers */
+
+.biomarkers-section {
+  margin-top: 38px;
+}
+
+.section-heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+
+  margin-bottom: 14px;
+}
+
+.section-heading .eyebrow {
+  margin-bottom: 5px;
+}
+
+.section-heading h2 {
+  margin: 0;
+
+  color: #252c28;
+  font-size: 20px;
+  letter-spacing: -0.025em;
+}
+
+.section-heading > span {
+  color: #858d88;
+  font-size: 11px;
+}
+
+.biomarker-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.biomarker-card {
+  min-height: 132px;
+
+  padding: 17px;
+
+  background: #fff;
+  border: 1px solid #e1e6e2;
+  border-radius: 9px;
+}
+
+.biomarker-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  color: #606a64;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.status-dot {
+  width: 7px;
+  height: 7px;
+
+  border-radius: 50%;
+  background: #65a48d;
+}
+
+.status-dot.high {
+  background: #c47d65;
+}
+
+.biomarker-value {
+  margin-top: 20px;
+
+  display: flex;
+  align-items: baseline;
+  gap: 5px;
+}
+
+.biomarker-value strong {
+  color: #252c28;
+  font-size: 27px;
+  letter-spacing: -0.035em;
+  font-weight: 650;
+}
+
+.biomarker-value span {
+  color: #808983;
+  font-size: 11px;
+}
+
+.reference {
+  margin-top: 8px;
+
+  color: #939a96;
+  font-size: 10px;
+}
+
+/* Verification */
+
+.verification-footer {
+  margin-top: 26px;
+  padding: 17px 18px;
+
+  display: flex;
+  align-items: center;
+  gap: 11px;
+
+  border-top: 1px solid #dfe4df;
+}
+
+.verification-check {
+  width: 25px;
+  height: 25px;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 50%;
+  background: #e7f0ec;
+  color: #356657;
+}
+
+.verification-footer strong {
+  display: block;
+
+  color: #43504a;
+  font-size: 12px;
+  font-weight: 650;
+}
+
+.verification-footer p {
+  margin: 3px 0 0;
+
+  color: #8a918d;
+  font-size: 11px;
+}
+
+/* Review */
+
+.review-card {
+  margin-top: 14px;
+  padding: 24px;
+
+  background: #fffdf8;
+  border: 1px solid #e8e0ce;
+  border-radius: 11px;
+}
+
+.review-top {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+
+  color: #806b40;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.review-dot {
+  width: 7px;
+  height: 7px;
+
+  border-radius: 50%;
+  background: #c39b51;
+}
+
+.review-card h2 {
+  max-width: 550px;
+  margin: 17px 0 9px;
+
+  color: #332f27;
+  font-size: 21px;
+  line-height: 1.3;
+  letter-spacing: -0.025em;
+}
+
+.review-card p {
+  max-width: 650px;
+  margin: 0;
+
+  color: #756f63;
+  font-size: 13px;
+  line-height: 1.65;
+}
+
+/* Coverage */
+
+.coverage-card {
+  margin-top: 10px;
+  padding: 20px;
+
+  background: #fff;
+  border: 1px solid #e1e6e2;
+  border-radius: 11px;
+}
+
+.coverage-card .section-label {
+  display: flex;
+  justify-content: space-between;
+
+  color: #606a64;
+}
+
+.coverage-card .section-label strong {
+  color: #2f6052;
+}
+
+.progress-track {
+  height: 7px;
+  margin-top: 12px;
+
+  overflow: hidden;
+
+  border-radius: 10px;
+  background: #e8ece9;
+}
+
+.progress-fill {
+  height: 100%;
+  border-radius: inherit;
+  background: #4e8775;
+}
+
+.coverage-card p {
+  margin: 10px 0 0;
+
+  color: #8a918d;
+  font-size: 10px;
+  line-height: 1.5;
+}
+
+/* Empty + error */
+
+.state-card {
+  padding: 38px 28px;
+
+  background: #fff;
+  border: 1px solid #e1e6e2;
+  border-radius: 11px;
+  text-align: center;
+}
+
+.state-card h1,
+.state-card h2 {
+  margin: 8px 0 8px;
+
+  color: #292f2b;
+  font-size: 21px;
+  letter-spacing: -0.025em;
+}
+
+.state-card p:not(.eyebrow) {
+  max-width: 450px;
+  margin: 0 auto;
+
+  color: #7b837e;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.state-icon {
+  width: 38px;
+  height: 38px;
+
+  margin: 0 auto 17px;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 50%;
+
+  background: #f7e9e5;
+  color: #a45c48;
+
+  font-weight: 700;
+}
+
+.state-icon.muted {
+  background: #eef0ee;
+  color: #7d8580;
+}
+
+.error-card .secondary-button {
+  margin-top: 20px;
+}
+
+.secondary-button {
+  border: 1px solid #ccd5cf;
+  background: #fff;
+  color: #3f4a44;
+}
+
+.secondary-button:hover {
+  background: #f5f7f5;
+}
+
+/* --------------------------------
+   SKELETON
+--------------------------------- */
+
+.skeleton {
+  position: relative;
+  overflow: hidden;
+
+  background: #e8ece9;
+  border-radius: 6px;
+}
+
+.skeleton::after {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  transform: translateX(-100%);
+
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.55),
+    transparent
+  );
+
+  animation: skeleton-loading 1.25s infinite;
+}
+
+.skeleton-small {
+  width: 80px;
+  height: 10px;
+  margin-bottom: 13px;
+}
+
+.skeleton-title {
+  width: 190px;
+  height: 34px;
+  margin-bottom: 25px;
+}
+
+.skeleton-card {
+  min-height: 88px;
+  padding: 18px;
+  margin-bottom: 10px;
+
+  background: #fff;
+  border: 1px solid #e1e6e2;
+  border-radius: 11px;
+}
+
+.skeleton-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+.skeleton-lines {
+  margin-left: 64px;
+  margin-top: -50px;
+}
+
+.skeleton-line {
+  height: 11px;
+  margin-bottom: 9px;
+}
+
+.skeleton-line.medium {
+  width: 180px;
+}
+
+.skeleton-line.short {
+  width: 110px;
+}
+
+.skeleton-score {
+  width: 130px;
+  height: 35px;
+  margin-top: 14px;
+}
+
+.skeleton-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.skeleton-grid .skeleton-card {
+  min-height: 132px;
+}
+
+@keyframes skeleton-loading {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* --------------------------------
+   RESPONSIVE
+--------------------------------- */
+
+@media (max-width: 700px) {
+  .navbar {
+    height: 64px;
+    padding: 0 18px;
+  }
+
+  .search-button span {
+    display: none;
+  }
+
+  .search-button {
+    width: 40px;
+    padding: 0;
+    justify-content: center;
+  }
+
+  .navbar-search {
+    right: 68px;
+    top: 10px;
+  }
+
+  .navbar-search.is-open {
+    width: calc(100vw - 140px);
+  }
+
+  .home,
+  .report-page {
+    width: min(100% - 32px, 920px);
+  }
+
+  .home-intro {
+    padding: 72px 0 52px;
+  }
+
+  .home-intro h1 {
+    font-size: 38px;
+  }
+
+  .home-guide {
+    grid-template-columns: 1fr;
+  }
+
+  .home-guide > div,
+  .home-guide > div + div {
+    padding: 18px 0;
+    border-left: 0;
+  }
+
+  .home-guide > div + div {
+    border-top: 1px solid #dfe4df;
+  }
+}
+
+@media (max-width: 560px) {
+  .report-page {
+    padding-top: 22px;
+  }
+
+  .report-heading h1 {
+    font-size: 28px;
+  }
+
+  .biomarker-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .score-card {
+    padding: 19px;
+  }
+
+  .score strong {
+    font-size: 36px;
+  }
+}
+
+@media (max-width: 430px) {
+  .navbar {
+    padding: 0 14px;
+  }
+
+  .brand {
+    font-size: 14px;
+  }
+
+  .brand-mark {
+    width: 28px;
+    height: 28px;
+  }
+
+  .navbar-search {
+    right: 60px;
+  }
+
+  .navbar-search.is-open {
+    width: calc(100vw - 120px);
+  }
+
+  .navbar-search input {
+    font-size: 12px;
+    padding-left: 37px;
+  }
+
+  .home,
+  .report-page {
+    width: calc(100% - 28px);
+  }
+
+  .home-intro {
+    padding-top: 60px;
+  }
+
+  .home-intro h1 {
+    font-size: 34px;
+  }
+
+  .home-description {
+    font-size: 14px;
+  }
+
+  .primary-button {
+    width: 100%;
+  }
+
+  .member-card {
+    align-items: flex-start;
+  }
+
+  .verified-badge {
+    margin-left: auto;
+  }
+
+  .review-card,
+  .coverage-card {
+    padding: 18px;
+  }
+
+  .review-card h2 {
+    font-size: 19px;
+  }
+
+  .score-card {
+    min-height: 115px;
+  }
+
+  .score strong {
+    font-size: 32px;
+  }
+
+  .skeleton-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 375px) {
+  .home-intro {
+    padding-top: 48px;
+  }
+
+  .home-intro h1 {
+    font-size: 31px;
+  }
+
+  .home-guide > div {
+    padding: 16px 0;
+  }
+
+  .report-page {
+    padding-bottom: 45px;
+  }
+
+  .report-heading {
+    margin-bottom: 20px;
+  }
+
+  .member-card {
+    padding: 14px;
+  }
+
+  .avatar {
+    width: 44px;
+    height: 44px;
+  }
+
+  .verified-badge {
+    padding: 5px 6px;
+    font-size: 10px;
+  }
+
+  .verified-badge svg {
+    display: none;
+  }
+
+  .score-card {
+    padding: 17px;
+  }
+
+  .score-helper {
+    max-width: 130px;
+    line-height: 1.4;
+  }
+
+  .biomarker-card {
+    min-height: 125px;
+  }
 }
